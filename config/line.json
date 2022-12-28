@@ -1,7 +1,0 @@
-{
-    "token": "msMRG9L842SX2HOLTWO9KcykxlgmKZmXpgx8nkSPUhU",
-    "message": {
-        "alarm": "\n{{.time}}\n{{.sensor_name}}\n{{.value}}度\n注意!警報已啟動!",
-        "back_normal": "\n{{.time}}\n{{.sensor_name}}\n{{.value}}度\n溫度回復正常值!警報復歸"
-    }
-}
