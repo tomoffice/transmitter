@@ -1,0 +1,6 @@
+{
+    "name":"P4C4",
+    "port":"COM3",
+    "baud":9600,
+    "modbus_id":100
+}

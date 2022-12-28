@@ -1,0 +1,53 @@
+[
+    {
+        "id":1,
+        "name": "冰庫_99",
+        "station_id": 1,
+        "port": "COM3",
+        "baud": 9600,
+        "sensor_type": "temperature",
+        "data_type": "int16",
+        "modbus_type": "rtu",
+        "modbus_code": "01 03 00 00 00 02",
+        "db_id": 1,
+        "value_scale": "{{.value}}*1",
+        "alert": [
+            19.0,
+            23.0
+        ]
+    },
+    {
+        "id":2,
+        "name": "冰庫_100",
+        "station_id": 1,
+        "port": "COM3",
+        "baud": 9600,
+        "sensor_type": "temperature",
+        "data_type": "int16",
+        "modbus_type": "rtu",
+        "modbus_code": "02 03 00 00 00 02",
+        "db_id": 2,
+        "value_scale": "{{.value}}*1",
+        "alert": [
+            19.0,
+            23.0
+        ]
+    },
+    {
+        "id":3,
+        "name": "冰庫_101",
+        "station_id": 1,
+        "port": "COM3",
+        "baud": 9600,
+        "sensor_type": "temperature",
+        "data_type": "int16",
+        "modbus_type": "rtu",
+        "modbus_code": "03 03 00 00 00 02",
+        "db_id": 3,
+        "value_scale": "{{.value}}*1",
+        "alert": [
+            19.0,
+            23.0
+        ]
+    }
+]

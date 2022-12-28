@@ -1,0 +1,12 @@
+{
+    "type":"mysql",
+    "dbusername": "root",
+    "dbpassword": "admin",
+    "protocol": "tcp",
+    "host": "192.168.10.101",
+    "port": 3306,
+    "database": "eaststar",
+    "charset": "utf8",
+    "location": "Asia%2FTaipei",
+    "parsetime": true
+}
