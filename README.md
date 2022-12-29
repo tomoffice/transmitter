@@ -49,3 +49,13 @@ rtu.SetCmd(func(cmd string) []byte {
 }("01 03 00 00 00 02"))
 rtu.GetCmd()
 ```
+#### Write Serial or ModbusTCP(TCP incomplete):
+```go
+var Serialer PkgModbus.Transmit = PkgModbus.NewRSerial(v.Name, v.Port, v.Baud, time.Millisecond*1000)
+Serialer.Conn()
+Serialer.Flush()
+Serialer.Write(rtu.GetCmd())
+data, err := Serialer.Read()
+fmt.Println(data,err)
+Serialer.Disconn()
+```
