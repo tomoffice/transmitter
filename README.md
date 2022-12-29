@@ -36,5 +36,16 @@ for _, v := range w.wSensors.Sensor {
 defer mysqler.Close()
 log.Println("Write mysqler success")
 ```
-
-
+#### Make ModbusRtu with CRC-16:
+```go
+var rtu PkgModbus.Modbus = PkgModbus.NewRtuCmd()
+rtu.SetCmd(func(cmd string) []byte {
+	data := strings.ReplaceAll(cmd, " ", "")
+	output, err := hex.DecodeString(data)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return output
+}("01 03 00 00 00 02"))
+rtu.GetCmd()
+```
