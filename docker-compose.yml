@@ -1,0 +1,38 @@
+version: '3.3'
+services:
+  mysql:
+    build: ./mysql
+    container_name: eaststar_mysql
+    ports:
+      - '3306:3306'
+    volumes:
+      - './host_mysql:/var/lib/mysql'
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: eaststar
+  phpapache:
+    build: ./php
+    container_name: eaststar_phpapache
+    ports:
+      - '80:80'
+      - '443:443'
+    depends_on:
+      - mysql
+    volumes:
+      - './host_www:/var/www/html'
+    restart: always
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: eaststar_phpmyadmin
+    ports:
+      - '8080:80'
+    depends_on:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: admin
+    #volumes:
+    #  - './host_phpmyadmin:/etc/phpmyadmin'
+    restart: always
