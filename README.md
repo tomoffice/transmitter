@@ -59,3 +59,17 @@ data, err := Serialer.Read()
 fmt.Println(data,err)
 Serialer.Disconn()
 ```
+#### FlowChart
+
+```mermaid
+graph TD
+    L[Trigger */1 20-23,0-7 * * *] -->|every minute past every hour from 20 through 23 and every hour from 0 through 7.|B
+    I[Trigger 0 21 * * *] -->|report at 9pm|B
+    A[GetConfig] -->L
+    A-->I
+    B(GetValue)
+    B --> C{CheckValue}
+    C --> D[Line Notify]
+    C --> E[fa:fa-bell Buzzer]
+    B--> F[fa:fa-database DB]
+```
