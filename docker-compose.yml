@@ -2,7 +2,7 @@ version: '3.3'
 services:
   mysql:
     build: ./mysql
-    container_name: eaststar_mysql
+    container_name: mysql
     ports:
       - '3306:3306'
     volumes:
@@ -10,10 +10,10 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: admin
-      MYSQL_DATABASE: eaststar
+      MYSQL_DATABASE: yongfeng
   phpapache:
     build: ./php
-    container_name: eaststar_phpapache
+    container_name: phpapache
     ports:
       - '80:80'
       - '443:443'
@@ -24,7 +24,7 @@ services:
     restart: always
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    container_name: eaststar_phpmyadmin
+    container_name: phpmyadmin
     ports:
       - '8080:80'
     depends_on:
