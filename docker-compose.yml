@@ -1,0 +1,51 @@
+version: '3.3'
+services:
+  mysql:
+    build: ./mysql
+    container_name: yongfeng_mysql
+    ports:
+      - '3306:3306'
+    volumes:
+      - './host_mysql:/var/lib/mysql'
+      - './sql_dump:/docker-entrypoint-initdb.d' #要匯入的.sql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: yongfeng
+      TZ: Asia/Taipei
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mysql",
+          "-h",
+          "127.0.0.1",
+          "--user=root",
+          "--password=admin",
+          "-e",
+          "SHOW DATABASES;"
+        ]
+      interval: 5s
+      timeout: 10s
+      start_period: 5s
+  golang:
+    build:
+      context: ./
+      dockerfile: ./golang/Dockerfile
+    container_name: yongfeng_golang
+    command: tail -f /dev/null
+    #depends_on:
+    #  - mysql
+    volumes:
+      - ./App/config:/src/config
+    #entrypoint: [ "./exec" ]
+    restart: on-failure:5
+    environment:
+      - TZ=Asia/Taipei
+    healthcheck:
+      test: ["CMD", "./dockerTest"]
+      interval: 1m
+      timeout: 30s
+      retries: 5
+      start_period: 10s
+
