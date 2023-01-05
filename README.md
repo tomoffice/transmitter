@@ -73,3 +73,5 @@ graph TD
     C --> E[fa:fa-bell Buzzer]
     B--> F[fa:fa-database DB]
 ```
+#### docker compose healthcheck:
+if database failure return exit(1) success return exit(0)
