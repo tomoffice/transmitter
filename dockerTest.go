@@ -9,12 +9,12 @@ import (
 func main() {
 	var sql sql.Database = &sql.Mysql{
 		Config: sql.Config{
-			Username:  "root",
-			Password:  "admin",
+			Username:  "XXX",
+			Password:  "XXX",
 			Protocol:  "tcp",
-			Host:      "192.168.10.101",
+			Host:      "XXX.XXX.XXX.XXX",
 			Port:      3306,
-			Database:  "yongfeng",
+			Database:  "XXX",
 			Chartset:  "utf8",
 			Location:  "Asia%2FTaipei",
 			Parsetime: true,
