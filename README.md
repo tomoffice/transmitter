@@ -81,3 +81,5 @@ graph TD
 	CREATED         STATUS                   PORTS                               NAMES
 	3 minutes ago   Up 3 minutes (healthy)   0.0.0.0:3306->3306/tcp, 33060/tcp   yongfeng_mysql
 	3 minutes ago   Up 3 minutes (healthy)                                       yongfeng_golang
+#### docker container relationship
+[![](https://github.com/tomoffice/transmitter/blob/origin/docker-compose.png?raw=true)](https://github.com/tomoffice/transmitter/blob/origin/docker-compose.png?raw=true)
