@@ -1,13 +1,13 @@
 package main
 
 import (
-	"time"
+	Pkgwf "transmitter/workflow"
 
 	"github.com/robfig/cron/v3"
 )
 
 func init() {
-	workflow = &work{}
+	workflow = Pkgwf.New()
 	workflow.GetConfig()
 }
 func task() {
@@ -27,15 +27,14 @@ func sched() {
 	c.Start()
 }
 
-var workflow Workflower
+var workflow Pkgwf.Workflower
 
 func main() {
-	/*sched()
-	select {}*/
-
-	for {
+	sched()
+	select {}
+	/*for {
 		task()
 		time.Sleep(time.Second * 10)
-	}
+	}*/
 
 }

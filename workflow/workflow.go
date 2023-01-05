@@ -1,4 +1,4 @@
-package main
+package workflow
 
 import (
 	"bytes"
@@ -12,6 +12,7 @@ import (
 	"strings"
 	"text/template"
 	"time"
+	PkgConfig "transmitter/configwarp"
 	PkgEval "transmitter/evalwapper"
 	PkgModbus "transmitter/modbus"
 	PkgSql "transmitter/sql"
@@ -19,10 +20,10 @@ import (
 )
 
 type work struct {
-	wSensors *configSensors
-	wDB      *configDB
-	wLine    *configLine
-	wBuzzer  *configBuzzer
+	wSensors *PkgConfig.ConfigSensors
+	wDB      *PkgConfig.ConfigDB
+	wLine    *PkgConfig.ConfigLine
+	wBuzzer  *PkgConfig.ConfigBuzzer
 }
 
 // Workflower for interface
@@ -38,19 +39,19 @@ type Workflower interface {
 
 func (w *work) GetConfig() {
 	fmt.Println("!GetConfig!")
-	sensorsConf := &configSensors{}
+	sensorsConf := &PkgConfig.ConfigSensors{}
 	sensorsConf.ReadConfig("config/sensor.json")
 	w.wSensors = sensorsConf
 
-	dbConf := &configDB{}
+	dbConf := &PkgConfig.ConfigDB{}
 	dbConf.ReadConfig("config/database.json")
 	w.wDB = dbConf
 
-	lineConf := &configLine{}
+	lineConf := &PkgConfig.ConfigLine{}
 	lineConf.ReadConfig("config/line.json")
 	w.wLine = lineConf
 
-	buzzerConf := &configBuzzer{}
+	buzzerConf := &PkgConfig.ConfigBuzzer{}
 	buzzerConf.ReadConfig("config/buzzer.json")
 	w.wBuzzer = buzzerConf
 }
@@ -290,4 +291,7 @@ func strToType(strType string) reflect.Kind {
 	default:
 		panic("unknow type")
 	}
+}
+func New() *work {
+	return &work{}
 }
