@@ -33,12 +33,12 @@ services:
       context: ./
       dockerfile: ./golang/Dockerfile
     container_name: yongfeng_golang
-    command: tail -f /dev/null
+    command: tail -f /dev/null #force run container without close
     #depends_on:
     #  - mysql
     volumes:
       - ./App/config:/src/config
-    #entrypoint: [ "./exec" ]
+    #entrypoint: [ "./main" ]
     restart: on-failure:5
     environment:
       - TZ=Asia/Taipei
