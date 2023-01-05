@@ -73,5 +73,11 @@ graph TD
     C --> E[fa:fa-bell Buzzer]
     B--> F[fa:fa-database DB]
 ```
-#### docker compose healthcheck:
-if database failure return exit(1) success return exit(0)
+#### docker compose healthcheck(dockerTest):
+    if database failure return exit(1) success return exit(0)
+    
+    when using docker container ls will output:
+    
+	CREATED         STATUS                   PORTS                               NAMES
+	3 minutes ago   Up 3 minutes (healthy)   0.0.0.0:3306->3306/tcp, 33060/tcp   yongfeng_mysql
+	3 minutes ago   Up 3 minutes (healthy)                                       yongfeng_golang
