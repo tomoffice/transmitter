@@ -1,4 +1,4 @@
-package main
+package configwarp
 
 import (
 	"encoding/json"
@@ -21,11 +21,11 @@ type configSensor struct {
 	AlertStatus bool        `json:"-"`
 	Value       interface{} `json:"-"`
 }
-type configSensors struct {
+type ConfigSensors struct {
 	Sensor []configSensor
 }
 
-func (cfSensors *configSensors) ReadConfig(location string) {
+func (cfSensors *ConfigSensors) ReadConfig(location string) {
 	data, err := os.ReadFile(location)
 	if err != nil {
 		panic(err)
@@ -36,7 +36,7 @@ func (cfSensors *configSensors) ReadConfig(location string) {
 	}
 }
 
-type configDB struct {
+type ConfigDB struct {
 	Type       string `json:"type"`
 	DBusername string `json:"dbusername"`
 	DBpassword string `json:"dbpassword"`
@@ -49,7 +49,7 @@ type configDB struct {
 	Parsetime  bool   `json:"parsetime"`
 }
 
-func (db *configDB) ReadConfig(location string) {
+func (db *ConfigDB) ReadConfig(location string) {
 	data, err := os.ReadFile(location)
 	if err != nil {
 		panic(err)
@@ -60,7 +60,7 @@ func (db *configDB) ReadConfig(location string) {
 	}
 }
 
-type configLine struct {
+type ConfigLine struct {
 	Token   string  `json:"token"`
 	Message lineMsg `json:"message"`
 }
@@ -69,7 +69,7 @@ type lineMsg struct {
 	BackNormal string `json:"back_normal"`
 }
 
-func (cfLine *configLine) ReadConfig(location string) {
+func (cfLine *ConfigLine) ReadConfig(location string) {
 	data, err := os.ReadFile(location)
 	if err != nil {
 		panic(err)
@@ -80,14 +80,14 @@ func (cfLine *configLine) ReadConfig(location string) {
 	}
 }
 
-type configBuzzer struct {
+type ConfigBuzzer struct {
 	Name     string `json:"name"`
 	Port     string `json:"port"`
 	Baud     int    `json:"baud"`
 	ModbusID int    `json:"modbus_id"`
 }
 
-func (cfBuzzer *configBuzzer) ReadConfig(location string) {
+func (cfBuzzer *ConfigBuzzer) ReadConfig(location string) {
 	data, err := os.ReadFile(location)
 	if err != nil {
 		panic(err)
