@@ -7,7 +7,7 @@ import (
 var mysqler PkgSql.Database = PkgSql.NewMysql()
 Mysqler.ParseConfig(map[string]interface{}{
 	"dbusername": "XXX",
-	"dbpassword": "XXX,
+	"dbpassword": "XXX",
 	"protocol":   "tcp",
 	"host":       "xxx.xxx.xxx.xxx",
 	"port":       3306,
