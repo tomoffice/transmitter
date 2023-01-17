@@ -1,4 +1,4 @@
-package configwarp
+package configwrap
 
 import (
 	"encoding/json"
