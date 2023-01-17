@@ -2,7 +2,7 @@ package workflow
 
 import (
 	"testing"
-	PkgConfig "transmitter/configwarp"
+	PkgConfig "transmitter/configwrap"
 )
 
 func Test_work_GetConfig(t *testing.T) {
