@@ -4,16 +4,14 @@ import (
 	"bytes"
 	"encoding/hex"
 	"fmt"
-	"io/ioutil"
 	"log"
-	"net/http"
-	"net/url"
 	"reflect"
 	"strings"
 	"text/template"
 	"time"
 	PkgConfig "transmitter/configwrap"
 	PkgEval "transmitter/evalwrapper"
+	PkgLine "transmitter/line"
 	PkgModbus "transmitter/modbus"
 	PkgSql "transmitter/sql"
 	Pkgtools "transmitter/tools"
@@ -30,7 +28,6 @@ type work struct {
 type Workflower interface {
 	GetConfig()
 	GetValue()
-	LineTrigger(string)
 	BuzzerTrigger()
 	Notify()
 	WriteDB()
@@ -108,6 +105,8 @@ func (w *work) GetValue() {
 }
 func (w *work) Notify() {
 	fmt.Println("!Notify!")
+	var notify PkgLine.Liner = PkgLine.NewNotify()
+	notify.Config(w.wLine.Token)
 	var buzzerOnce bool = false
 	for i, v := range w.wSensors.Sensor {
 		var min float64 = v.Alert[0]
@@ -133,7 +132,7 @@ func (w *work) Notify() {
 						if Pkgtools.NewHandle().Err(err, func() {}, time.Second*0) {
 							continue
 						}
-						w.LineTrigger(buf.String())
+						notify.Trigger(buf.String())
 						if buzzerOnce == false {
 							w.BuzzerTrigger()
 							buzzerOnce = true
@@ -153,13 +152,12 @@ func (w *work) Notify() {
 						if err != nil {
 							panic(err)
 						}
-						w.LineTrigger(buf.String())
+						notify.Trigger(buf.String())
 						w.wSensors.Sensor[i].AlertStatus = false //ptr
 					}
 				}
-
 			} else {
-				w.LineTrigger("溫度計讀取異常請查修,不開啟警報器!!!" + fmt.Sprintf("%.2f", v.Value))
+				notify.Trigger("溫度計讀取異常請查修,不開啟警報器!!!" + fmt.Sprintf("%.2f", v.Value))
 			}
 		}
 	}
@@ -201,33 +199,6 @@ func (w *work) WriteDB() {
 		log.Println("Write DB success")
 	}
 }
-func (w *work) LineTrigger(sendMsg string) {
-	fmt.Println("!LineTrigger!")
-	url := fmt.Sprintf("https://notify-api.line.me/api/notify?message=%s", url.QueryEscape(sendMsg))
-	method := "POST"
-	payload := strings.NewReader("")
-	client := &http.Client{}
-	req, err := http.NewRequest(method, url, payload)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
-	req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", w.wLine.Token))
-	res, err := client.Do(req)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	defer res.Body.Close()
-	_, err = ioutil.ReadAll(res.Body)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	//fmt.Println(string(body))
-	log.Printf("Line Notify Send %s", sendMsg)
-}
 func (w *work) BuzzerTrigger() {
 	fmt.Println("!BuzzerTrigger!")
 	var serial PkgModbus.Transmit = PkgModbus.NewRSerial(
@@ -248,7 +219,8 @@ func (w *work) BuzzerTrigger() {
 	serial.Disconn()
 }
 func (w *work) NotifyReport() {
-
+	var notify PkgLine.Liner = PkgLine.NewNotify()
+	notify.Config(w.wLine.Token)
 	var reportTime string = time.Now().Format("2006-01-02 15:04:05")
 	var reportTime1 string = time.Now().Format("01-02 15:04")
 	var reportStr string
@@ -264,7 +236,7 @@ func (w *work) NotifyReport() {
 		}
 
 	}
-	w.LineTrigger(reportStr)
+	notify.Trigger(reportStr)
 }
 func strToType(strType string) reflect.Kind {
 	switch strType {
